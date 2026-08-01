@@ -1,7 +1,28 @@
 aid: plusmargin
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source: []
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/plusmargin.png
 name: PlusMargin
-description: PlusMargin is a company surfaced as a portfolio company of 500-global and added to the API
-  Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  PlusMargin (Plus Margin) is a Bangkok, Thailand based digital marketing and
+  business consulting agency operating under the tagline "Connect | Engage |
+  Convert." The firm focuses on inbound marketing strategy, personalized and
+  AI-assisted marketing, buyer-persona development, and customer-journey mapping
+  for its clients, and publishes editorial content across marketing, business,
+  advertising, technology, learning, insurance, and lifestyle topics. It was
+  surfaced as a portfolio company of 500 Global and added to the API Evangelist
+  network as a stub for enrichment. As of this pass the company operates a
+  marketing/content website only and exposes no public API, developer portal,
+  SDKs, or machine-readable discovery surface.
 url: https://raw.githubusercontent.com/api-evangelist/plusmargin/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -11,9 +32,15 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-20'
 tags:
 - Company
+- Marketing
+- Digital Marketing
+- Consulting
+- Advertising
+- Customer Engagement
+- Thailand
 apis: []
 maintainers:
 - FN: Kin Lane
@@ -23,3 +50,16 @@ maintainers:
 common:
 - type: Website
   url: https://plusmargin.com
+- type: About
+  url: https://plusmargin.com/about/
+- type: Contact
+  url: https://plusmargin.com/contact/
+- type: PrivacyPolicy
+  url: https://plusmargin.com/privacy-policy/
+- type: DomainSecurity
+  url: security/plusmargin-domain-security.yml
+x-enrichment:
+  date: '2026-07-20'
+  status: minimal
+  artifacts_added: 1
+  pass: local-v1
