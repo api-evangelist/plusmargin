@@ -14,15 +14,21 @@ image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/plusmargin
 name: PlusMargin
 description: >-
   PlusMargin (Plus Margin) is a Bangkok, Thailand based digital marketing and
-  business consulting agency operating under the tagline "Connect | Engage |
+  business consulting practice operating under the tagline "Connect | Engage |
   Convert." The firm focuses on inbound marketing strategy, personalized and
   AI-assisted marketing, buyer-persona development, and customer-journey mapping
-  for its clients, and publishes editorial content across marketing, business,
-  advertising, technology, learning, insurance, and lifestyle topics. It was
-  surfaced as a portfolio company of 500 Global and added to the API Evangelist
-  network as a stub for enrichment. As of this pass the company operates a
-  marketing/content website only and exposes no public API, developer portal,
-  SDKs, or machine-readable discovery surface.
+  for its clients, and publishes Thai-language editorial content across marketing,
+  business, advertising, technology, learning, insurance, and lifestyle topics. It
+  was surfaced as a portfolio company of 500 Global — where secondary sources
+  describe an earlier Singapore-founded "predictive persuasion" e-commerce
+  personalization product — but the domain today serves a four-page consulting and
+  content site with no trace of that platform. Enrichment on 2026-08-12 confirmed
+  no product API, no developer portal, no SDKs on any package registry, no
+  /.well-known/ discovery surface, no llms.txt and no agent card. The one callable,
+  machine-readable surface is the stock WordPress REST API the marketing site
+  exposes at /wp-json — 237 routes across 11 namespaces, anonymously readable for
+  content — which is WordPress core's API rather than a product PlusMargin
+  designed, documents, or supports.
 url: https://raw.githubusercontent.com/api-evangelist/plusmargin/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -32,7 +38,7 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-20'
+modified: '2026-08-12'
 tags:
 - Company
 - Marketing
@@ -41,7 +47,71 @@ tags:
 - Advertising
 - Customer Engagement
 - Thailand
-apis: []
+apis:
+- aid: plusmargin:wordpress-rest-api
+  name: PlusMargin WordPress REST API
+  description: >-
+    The stock WordPress REST API exposed by PlusMargin's marketing site. The root discovery
+    document at /wp-json self-identifies as "Plus Margin" (url https://plusmargin.com) and
+    registers 237 routes across 11 namespaces — wp/v2 content routes plus plugin namespaces
+    (yoast/v1, redirection/v1, contact-form-7/v1, wp-smush/v1, wp-block-editor/v1,
+    wp-site-health/v1, wp-abilities/v1, oembed/1.0 and two site-specific namespaces). Core
+    content collections — posts, pages, categories, tags, types, users, media, search — are
+    readable with no credentials. This is WordPress core's API surface, not a product PlusMargin
+    designed, documents, or supports; it is catalogued because it is the only callable
+    machine-readable interface the company serves. Write operations and the Abilities API
+    require WordPress Application Password credentials.
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://plusmargin.com/wp-json
+  tags:
+  - Content
+  - REST
+  - JSON
+  - WordPress
+  - CMS
+  properties:
+  - type: Documentation
+    url: https://developer.wordpress.org/rest-api/
+  - type: APIReference
+    url: https://developer.wordpress.org/rest-api/reference/
+  - type: Authentication
+    url: authentication/plusmargin-authentication.yml
+  - type: Conventions
+    url: conventions/plusmargin-conventions.yml
+  - type: ErrorCatalog
+    url: errors/plusmargin-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/plusmargin-rate-limits.yml
+  x-discovery:
+    root: https://plusmargin.com/wp-json
+    status: 200
+    advertised_by: 'Link: <https://plusmargin.com/wp-json/>; rel="https://api.w.org/"'
+    routes: 237
+    namespaces: 11
+    checked: '2026-08-12'
+  x-note: >-
+    Ownership verified per STEP 0c — the document is served from the company's own apex host and
+    names itself "Plus Margin" with url https://plusmargin.com. No OpenAPI describes it;
+    /openapi.json, /openapi.yaml and /swagger.json all 404 on this host.
+- aid: plusmargin:rss-feed
+  name: PlusMargin RSS Feed
+  description: >-
+    RSS 2.0 syndication feed for PlusMargin's editorial content — Thai-language articles across
+    Marketing, Business, Advertising, Technology, Learning, Insurance, Science and Lifestyle.
+    Served as application/rss+xml with no authentication. A Yoast-generated sitemap index is
+    also published, covering post, page, category, tag and author URLs.
+  humanURL: https://plusmargin.com/
+  baseURL: https://plusmargin.com/feed/
+  tags:
+  - Feed
+  - RSS
+  - Syndication
+  - Content
+  properties:
+  - type: BlogRSS
+    url: https://plusmargin.com/feed/
+  - type: Sitemap
+    url: https://plusmargin.com/sitemap.xml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -58,8 +128,46 @@ common:
   url: https://plusmargin.com/privacy-policy/
 - type: DomainSecurity
   url: security/plusmargin-domain-security.yml
+- type: BlogRSS
+  url: https://plusmargin.com/feed/
+- type: Sitemap
+  url: https://plusmargin.com/sitemap.xml
+- type: Authentication
+  url: authentication/plusmargin-authentication.yml
+- type: Conventions
+  url: conventions/plusmargin-conventions.yml
+- type: ErrorCatalog
+  url: errors/plusmargin-problem-types.yml
+- type: RateLimits
+  url: rate-limits/plusmargin-rate-limits.yml
+- type: Plans
+  url: plans/plusmargin-plans-pricing.yml
+- type: Packages
+  url: packages/plusmargin-packages.yml
+- type: LLMsTxt
+  url: llms/plusmargin-llms.txt
 x-enrichment:
-  date: '2026-07-20'
+  date: '2026-08-12'
   status: minimal
-  artifacts_added: 1
+  artifacts_added: 8
   pass: local-v1
+x-coverage:
+  state: none
+  reason: no-developer-program
+  detail: >-
+    PlusMargin runs a four-page WordPress consulting site — its own page sitemap lists only /,
+    /about/, /contact/ and /privacy-policy/ — with no developer, API, docs or pricing page, no
+    api/developer/docs subdomain (all NXDOMAIN), and no package on any registry; the only
+    machine-readable surface is the CMS's own /wp-json route index.
+  evidence:
+  - url: https://plusmargin.com/page-sitemap.xml
+    status: 200
+  - url: https://plusmargin.com/openapi.json
+    status: 404
+  - url: https://plusmargin.com/.well-known/agent-card.json
+    status: 404
+  - url: https://plusmargin.com/llms.txt
+    status: 404
+  - url: https://plusmargin.com/wp-json
+    status: 200
+  checked: '2026-08-12'

@@ -1,0 +1,32 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  https://plusmargin.com/ and its published page sitemap
+  (https://plusmargin.com/page-sitemap.xml, HTTP 200) — the complete set of pages the company
+  publishes
+provider: PlusMargin
+providerId: plusmargin
+plan_count: 0
+plans: []
+summary: >-
+  PlusMargin publishes no plans and no pricing, for its consulting services or for any API. The
+  Yoast page sitemap lists exactly four URLs — /, /about/, /contact/, /privacy-policy/ — and
+  /pricing/, /services/ and /plans/ all return 404. Engagement is contact-only: an address,
+  a phone number and info@plusmargin.com on /contact/. This is a recorded zero, not an
+  unattempted lookup.
+engagement_model: contact-only
+evidence:
+- url: https://plusmargin.com/page-sitemap.xml
+  status: 200
+  note: four page URLs total, none of them pricing
+- url: https://plusmargin.com/pricing/
+  status: 404
+- url: https://plusmargin.com/services/
+  status: 404
+- url: https://plusmargin.com/contact/
+  status: 200
+  note: contact form, postal address, phone and info@ email — the only stated way to engage
+notes:
+- >-
+  No free tier, trial, quota, overage or metered price exists to record. Nothing in this file
+  is a scaffold or a placeholder value.

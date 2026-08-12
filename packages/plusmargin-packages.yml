@@ -1,0 +1,49 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  unauthenticated registry searches on 2026-08-12 plus a full read of the four pages PlusMargin
+  publishes. No SDK, CLI or SourceCode link exists anywhere in apis.yml to derive candidates
+  from.
+provider: PlusMargin
+providerId: plusmargin
+package_count: 0
+packages: []
+summary: >-
+  PlusMargin publishes no client libraries. Every registry queried returned zero packages under
+  the name, and the company's site links to no SDK, no source repository and no GitHub
+  organization. No SDKs pointer is emitted in apis.yml, because there is no official SDK to
+  credit.
+registries_searched:
+- registry: npm
+  endpoint: https://registry.npmjs.org/-/v1/search?text=plusmargin
+  status: 200
+  results: 0
+- registry: pypi
+  endpoint: https://pypi.org/pypi/plusmargin/json
+  status: 404
+  results: 0
+- registry: rubygems
+  endpoint: https://rubygems.org/api/v1/gems/plusmargin.json
+  status: 404
+  results: 0
+- registry: crates.io
+  endpoint: https://crates.io/api/v1/crates?q=plusmargin
+  status: 200
+  results: 0
+- registry: github
+  endpoint: https://api.github.com/search/repositories?q=plusmargin
+  status: 200
+  results: 1
+  note: >-
+    The single match is api-evangelist/plusmargin — this profile repository. Not a PlusMargin
+    package.
+notes:
+- >-
+  github.com/plusmargin resolves (HTTP 200) but is an empty personal user account with zero
+  public repositories, no bio, no company and no link back to plusmargin.com. It is NOT wired
+  as a GitHubOrganization pointer: the account cannot be attributed to this company from any
+  public evidence, and attributing it would be a guess.
+- >-
+  Maven Central, NuGet, pkg.go.dev and Packagist were not separately queried: the company ships
+  no software product in any language, and the four registries above plus the GitHub code
+  search establish the negative.

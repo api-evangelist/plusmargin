@@ -1,0 +1,65 @@
+generated: '2026-08-12'
+method: probed
+source: >-
+  https://plusmargin.com/wp-json — the `authentication` block of the live WordPress REST API
+  root discovery document, plus observed anonymous and gated responses
+provider: PlusMargin
+providerId: plusmargin
+summary: >-
+  PlusMargin publishes no API program and therefore no authentication documentation. The only
+  authenticated surface reachable is the stock WordPress REST API on plusmargin.com, whose root
+  document advertises exactly one authentication method — WordPress Application Passwords (HTTP
+  Basic against an admin-issued application password). Read access to core content is anonymous;
+  everything write-scoped, and the Abilities API in full, requires credentials this pipeline does
+  not hold and did not attempt to obtain.
+apis:
+- name: PlusMargin WordPress REST API
+  baseURL: https://plusmargin.com/wp-json
+  schemes:
+  - id: application-passwords
+    type: http
+    scheme: basic
+    in: header
+    header: Authorization
+    description: >-
+      WordPress Application Passwords. A logged-in WordPress user authorizes an application at
+      the endpoint below and receives a per-application password used as HTTP Basic credentials.
+      Advertised verbatim by the API's own root document.
+    authorizationEndpoint: https://plusmargin.com/wp-admin/authorize-application.php
+    source: https://plusmargin.com/wp-json
+    docs: https://developer.wordpress.org/rest-api/using-the-rest-api/authentication/
+  - id: cookie-nonce
+    type: apiKey
+    in: header
+    header: X-WP-Nonce
+    description: >-
+      Cookie + nonce authentication for same-origin browser requests. Not advertised in the
+      `authentication` block, but the API declares X-WP-Nonce in its
+      Access-Control-Allow-Headers response header, so the scheme is active on this install.
+    source: https://plusmargin.com/wp-json/wp/v2/posts
+    confidence: medium
+  anonymous_access:
+    readable: true
+    detail: >-
+      Core content collections are readable with no credentials — verified against
+      /wp-json/wp/v2/posts (200), /wp-json/wp/v2/types (200), /wp-json/wp/v2/categories (200)
+      and /wp-json/wp/v2/users (200).
+  gated:
+  - path: /wp-json/wp-abilities/v1/abilities
+    status: 401
+    error: rest_forbidden
+  - path: /wp-json/wp-abilities/v1/categories
+    status: 401
+    error: rest_forbidden
+oauth2: false
+openIdConnect: false
+mutualTLS: false
+notes:
+- >-
+  No OAuth 2.0 or OpenID Connect surface exists: /.well-known/openid-configuration,
+  /.well-known/oauth-authorization-server and /.well-known/oauth-protected-resource all 404.
+  No scopes artifact is emitted, because there are no scopes to enumerate.
+- >-
+  This is WordPress core's authentication model, not an authentication design PlusMargin
+  authored or documents. It is recorded because it is what an agent calling
+  plusmargin.com/wp-json actually encounters.

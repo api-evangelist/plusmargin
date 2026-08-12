@@ -1,0 +1,53 @@
+generated: '2026-08-12'
+method: probed
+source: >-
+  live response headers on https://plusmargin.com/ and
+  https://plusmargin.com/wp-json/wp/v2/posts?per_page=2, plus a full read of the four pages
+  PlusMargin publishes (/, /about/, /contact/, /privacy-policy/)
+provider: PlusMargin
+providerId: plusmargin
+limit_count: 0
+summary: >-
+  PlusMargin publishes no rate limits, because it publishes no API program. The only callable
+  surface is the stock WordPress REST API on the marketing host, and it returns no rate-limit
+  signaling of any kind — no X-RateLimit-*, no RateLimit-*, no Retry-After, and no 429 was
+  observed. An honest zero, recorded rather than omitted.
+limits: []
+headers:
+  limit: null
+  remaining: null
+  reset: null
+  retryAfter: null
+  policy: null
+observed_response_headers:
+- x-wp-total
+- x-wp-totalpages
+- link
+- access-control-expose-headers
+- access-control-allow-headers
+- x-content-type-options
+- x-robots-tag
+- vary
+- age
+- server
+response_codes:
+  throttled: null
+  note: no 429 observed on any probed path
+evidence:
+- url: https://plusmargin.com/wp-json/wp/v2/posts?per_page=2
+  status: 200
+  note: >-
+    Response carries pagination signaling (x-wp-total 110, x-wp-totalpages 55, RFC 8288 Link
+    rel=next) and no rate-limit signaling.
+- url: https://plusmargin.com/pricing/
+  status: 404
+  note: no pricing or plan page exists to publish limits against
+notes:
+- >-
+  There is an edge cache in front of the origin (responses carry an `age` header; the homepage
+  served age=1702), so sustained anonymous reads are absorbed by cache rather than throttled.
+  That is infrastructure behaviour, not a published policy, and must not be read as a limit.
+- >-
+  robots.txt disallows roughly forty named SEO/marketing crawlers site-wide while allowing all
+  other user-agents; that is crawl policy, not an API rate limit, and is recorded here only so
+  it is not mistaken for one.

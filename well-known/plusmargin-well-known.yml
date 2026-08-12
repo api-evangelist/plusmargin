@@ -1,0 +1,100 @@
+generated: '2026-08-12'
+method: probed
+source: >-
+  live unauthenticated GET of /.well-known/*, /llms.txt and common contract paths on
+  https://plusmargin.com — the only host PlusMargin resolves (api., app., developer., docs.,
+  dev. and portal.plusmargin.com are all NXDOMAIN)
+summary: >-
+  PlusMargin publishes NO /.well-known/ discovery surface and no llms.txt. Every probed path
+  returns HTTP 404 rendered as the site's WordPress 404 HTML page (~74 KB of text/html), not a
+  document — including the two A2A agent-card paths, security.txt, OIDC/OAuth metadata,
+  api-catalog and ai-plugin.json. No WellKnown, SecurityTxt, LLMsTxt or AgentCard pointer is
+  emitted from this probe, because a 404 HTML shell is an absence, not a presence. The one
+  machine-readable surface the site DOES serve is the stock WordPress REST API discovery
+  document at /wp-json (HTTP 200, application/json, 237 routes), which the homepage advertises
+  in a `Link: <https://plusmargin.com/wp-json/>; rel="https://api.w.org/"` response header.
+hosts:
+- host: https://plusmargin.com
+  documents:
+  - path: /llms.txt
+    status: 404
+    note: WordPress 404 HTML page, not an llms.txt
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+    note: >-
+      A2A 1.0.0 canonical path. 404 HTML — no agent card. Nothing written to a2a/.
+  - path: /.well-known/agent.json
+    status: 404
+    note: pre-0.3 legacy agent-card path — also absent
+  - path: /openapi.json
+    status: 404
+  - path: /openapi.yaml
+    status: 404
+  - path: /api-docs
+    status: 404
+  - path: /graphql
+    status: 404
+  - path: /api
+    status: 404
+  - path: /wp-json
+    status: 200
+    note: >-
+      REAL machine-readable document — the WordPress REST API root discovery index.
+      application/json, ~234 KB, 237 routes across 11 namespaces. Self-identifies as
+      name "Plus Margin", url https://plusmargin.com — served by this company's own host.
+  - path: /wp-json/wp/v2
+    status: 200
+    note: 106 core content routes, anonymously readable
+  - path: /wp-json/wp-abilities/v1/abilities
+    status: 401
+    note: >-
+      WordPress Abilities API is registered on this install (an agent-facing capability
+      registry, WP 7.x) but is auth-gated — {"code":"rest_forbidden","status":401}. No
+      anonymous ability catalog is exposed.
+  - path: /robots.txt
+    status: 200
+  - path: /sitemap.xml
+    status: 200
+    note: Yoast sitemap index — post, page, category, post_tag, author sitemaps
+  - path: /feed/
+    status: 200
+    note: RSS 2.0 site feed, application/rss+xml
+findings:
+- id: hsts-header-name-mangled
+  severity: medium
+  detail: >-
+    The origin emits its security headers with the header NAME truncated into the value:
+    responses carry `ssl: Strict-Transport-Security: max-age=31536000; includeSubdomains;
+    preload` and `sameorig: X-Frame-Options: SAMEORIGIN` instead of the real
+    `Strict-Transport-Security` and `X-Frame-Options` headers. As deployed, no browser or agent
+    enforces HSTS or frame-options on plusmargin.com — the policy was configured but is being
+    sent under nonexistent header names. This is why security/plusmargin-domain-security.yml
+    records hsts:false against a server that clearly intended to set it.
+  evidence:
+  - url: https://plusmargin.com/
+    status: 200
+  - url: https://plusmargin.com/wp-json/wp/v2/posts?per_page=2
+    status: 200
+- id: no-developer-surface
+  severity: informational
+  detail: >-
+    No developer, API, docs or pricing page exists on the site. The published page sitemap
+    contains exactly four URLs — /, /about/, /contact/, /privacy-policy/ — and /pricing/,
+    /services/, /terms/ and /blog/ all 404. There is no product API to document.
+  evidence:
+  - url: https://plusmargin.com/page-sitemap.xml
+    status: 200
+  - url: https://plusmargin.com/pricing/
+    status: 404

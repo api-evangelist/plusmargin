@@ -1,0 +1,50 @@
+generated: '2026-08-12'
+method: probed
+source: >-
+  live error responses observed against https://plusmargin.com/wp-json. PlusMargin publishes no
+  error reference; there is no OpenAPI in this repo to derive 4xx/5xx responses from.
+provider: PlusMargin
+providerId: plusmargin
+format: wordpress-rest-error
+rfc9457: false
+content_type: application/json
+envelope:
+  code: machine-readable error slug
+  message: human-readable sentence
+  data.status: HTTP status code, repeated inside the body
+summary: >-
+  PlusMargin documents no error catalog. The entries below are the error shapes actually
+  returned by the WordPress REST API on the company's marketing host, captured verbatim from
+  live probes. This is WordPress core's error vocabulary, not a PlusMargin-authored contract.
+  The envelope is NOT RFC 9457 application/problem+json — it is the WordPress
+  {code, message, data.status} object served as application/json.
+problem_types:
+- code: rest_forbidden
+  status: 401
+  title: Sorry, you are not allowed to do that.
+  observed_at: https://plusmargin.com/wp-json/wp-abilities/v1/abilities
+  remediation: >-
+    Authenticate with a WordPress Application Password (HTTP Basic) issued by a site
+    administrator. The Abilities API on this install returns 401 to every anonymous caller, so
+    its ability catalog and inputSchemas cannot be introspected without credentials.
+  method: probed
+- code: rest_no_route
+  status: 404
+  title: No route was found matching the URL and request method.
+  observed_at: https://plusmargin.com/wp-json/
+  remediation: >-
+    Read the route table from the API root discovery document at /wp-json and call a registered
+    route. 237 routes across 11 namespaces are registered on this install.
+  method: derived
+  note: >-
+    Derived from the WordPress REST route table, not directly observed on this host in this
+    pass; the host's site-level 404 is an HTML page, while unmatched /wp-json/* routes return
+    this JSON error.
+notes:
+- >-
+  Site-level 404s (non-/wp-json paths) are NOT JSON — plusmargin.com returns a ~74 KB WordPress
+  HTML 404 page with status 404 for every unmatched path, including every /.well-known/* probe.
+  An agent must not treat the body as machine-readable.
+- >-
+  No 429 was observed and no throttling error is documented. See
+  rate-limits/plusmargin-rate-limits.yml.

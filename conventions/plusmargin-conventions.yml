@@ -1,0 +1,112 @@
+generated: '2026-08-12'
+method: probed
+source: >-
+  observed request/response behaviour of https://plusmargin.com/wp-json (root discovery
+  document, live headers, and live error bodies). PlusMargin publishes no conventions document
+  of its own.
+provider: PlusMargin
+providerId: plusmargin
+summary: >-
+  PlusMargin ships no API product and documents no cross-cutting API semantics. The conventions
+  recorded here were observed on the wire against the stock WordPress REST API the company's
+  marketing site exposes — they are WordPress core's conventions, not a design PlusMargin
+  authored, and are captured so an agent calling plusmargin.com/wp-json knows what it will get.
+auth:
+  style: http-basic (WordPress Application Passwords) + cookie/X-WP-Nonce
+  anonymous_read: true
+  see: authentication/plusmargin-authentication.yml
+idempotency:
+  supported: false
+  detail: >-
+    No Idempotency-Key header, no idempotent-replay semantics, and no retention window. The API
+    declares its accepted request headers explicitly — Authorization, X-WP-Nonce,
+    Content-Disposition, Content-MD5, Content-Type — and no idempotency header is among them.
+    No Idempotency pointer is emitted in apis.yml.
+  evidence:
+  - url: https://plusmargin.com/wp-json/wp/v2/posts?per_page=2
+    header: 'access-control-allow-headers: Authorization, X-WP-Nonce, Content-Disposition, Content-MD5, Content-Type'
+pagination:
+  style: page-number
+  params:
+  - name: page
+    default: 1
+  - name: per_page
+    default: 10
+    max: 100
+  - name: offset
+  - name: order
+  - name: orderby
+  response_headers:
+  - name: X-WP-Total
+    detail: total matching records — observed value 110 on /wp/v2/posts
+  - name: X-WP-TotalPages
+    detail: total pages at the current per_page — observed value 55
+  link_header: >-
+    RFC 8288 Link header carries rel="next" / rel="prev" —
+    <https://plusmargin.com/wp-json/wp/v2/posts?per_page=2&page=2>; rel="next"
+  cors_exposed: X-WP-Total, X-WP-TotalPages, Link
+sparse_fieldsets:
+  supported: true
+  param: _fields
+  detail: >-
+    ?_fields=name,slug,count returns only the named properties. Verified against
+    /wp-json/wp/v2/categories.
+embedding:
+  supported: true
+  param: _embed
+  detail: hypermedia _links are returned on every resource; ?_embed inlines the linked resources.
+filtering:
+  params:
+  - search
+  - after
+  - before
+  - modified_after
+  - modified_before
+  - categories
+  - tags
+  - author
+  - slug
+  - status
+metadata:
+  supported: true
+  detail: WordPress `meta` object on supported post types; no PlusMargin-specific metadata convention.
+request_tracing:
+  request_id_header: null
+  detail: >-
+    No request-id or correlation header is returned. Responses carry only date, vary, age and
+    server (Apache/2.4.53). An agent has no provider-side identifier to quote in a support
+    request — and there is no developer support channel to quote it to.
+versioning:
+  style: path-namespace
+  detail: >-
+    Version lives in the namespace segment (wp/v2, yoast/v1, contact-form-7/v1,
+    wp-abilities/v1, ...). 11 namespaces are registered on this install. No version negotiation
+    header, no deprecation policy, no Sunset header — see lifecycle.
+  namespaces:
+  - wp/v2
+  - oembed/1.0
+  - contact-form-7/v1
+  - redirection/v1
+  - yoast/v1
+  - wp-smush/v1
+  - hub-connector/v1
+  - tbs-child/v1
+  - wp-site-health/v1
+  - wp-block-editor/v1
+  - wp-abilities/v1
+error_envelope:
+  format: wordpress-rest-error
+  rfc9457: false
+  content_type: application/json
+  shape: '{"code": "<string>", "message": "<human string>", "data": {"status": <int>}}'
+  see: errors/plusmargin-problem-types.yml
+rate_limit_signaling:
+  headers: []
+  detail: >-
+    No X-RateLimit-*, RateLimit-* or Retry-After header was observed on any response, and no
+    limits are published. See rate-limits/plusmargin-rate-limits.yml.
+cross_links:
+  authentication: authentication/plusmargin-authentication.yml
+  errors: errors/plusmargin-problem-types.yml
+  rate_limits: rate-limits/plusmargin-rate-limits.yml
+  well_known: well-known/plusmargin-well-known.yml
