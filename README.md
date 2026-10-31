@@ -64,6 +64,98 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-PlusMargin is a company surfaced as a portfolio company of 500-global and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+PlusMargin (Plus Margin) is a Bangkok, Thailand based digital marketing and business consulting practice operating under the tagline "Connect | Engage | Convert." The firm focuses on inbound marketing strategy, personalized and AI-assisted marketing, buyer-persona development, and customer-journey mapping for its clients, and publishes Thai-language editorial content across marketing, business, advertising, technology, learning, insurance, and lifestyle topics. It was surfaced as a portfolio company of 500 Global — where secondary sources describe an earlier Singapore-founded "predictive persuasion" e-commerce personalization product — but the domain today serves a four-page consulting and content site with no trace of that platform. Enrichment on 2026-08-12 confirmed no product API, no developer portal, no SDKs on any package registry, no /.well-known/ discovery surface, no llms.txt and no agent card. The one callable, machine-readable surface is the stock WordPress REST API the marketing site exposes at /wp-json — 237 routes across 11 namespaces, anonymously readable for content — which is WordPress core's API rather than a product PlusMargin designed, documents, or supports.
 
-Backed by: 500-global — https://plusmargin.com
+**Areas:** Company · Marketing · Digital Marketing · Consulting · Advertising · Customer Engagement · Thailand
+
+## PlusMargin on APIs.io
+
+Everything profiled for PlusMargin is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/plusmargin/](https://apis.io/providers/plusmargin/)** — or go straight to one of the APIs or properties below.
+
+### APIs (2)
+
+- [PlusMargin Website (WordPress REST)](https://apis.io/apis/plusmargin/plusmargin-com-website-wordpress-rest/) — The public WordPress REST API (wp-json) of the PlusMargin website at plusmargin.com: the route index of the site's content management system, catalogued as…
+- [PlusMargin RSS Feed](https://apis.io/apis/plusmargin/rss-feed/) — RSS 2.0 syndication feed for PlusMargin's editorial content — Thai-language articles across Marketing, Business, Advertising, Technology, Learning,…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Plusmargin Authentication](https://apis.io/security/plusmargin/plusmargin-authentication/)
+- [Plusmargin Domain Security](https://apis.io/security/plusmargin/plusmargin-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Plusmargin Plans Pricing](https://apis.io/plans/plusmargin/plusmargin-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Plusmargin Rate Limits](https://apis.io/rate-limits/plusmargin/plusmargin-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://plusmargin.com)
+- [Privacy policy](https://plusmargin.com/privacy-policy/)
+
+## API Evangelist rating
+
+**Kin Score 12.2** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 57.1 |
+| Contract quality | 0.0 |
+| Contract governance | 0.0 |
+| Operational transparency | 0.0 |
+| Developer ergonomics | 21.4 |
+| Access clarity | 10.5 |
+
+**Agent readiness 7.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 15.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/plusmargin/](https://apis.io/providers/plusmargin/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for PlusMargin: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/plusmargin/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
